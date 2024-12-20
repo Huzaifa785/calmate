@@ -1,36 +1,146 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CalMate - Next.js Frontend 🏃‍♂️
 
-## Getting Started
+<img src="public/images/landing.png" alt="CalMate Dashboard Preview" />
 
-First, run the development server:
+A modern fitness tracking application built with Next.js 15, React 19, and TypeScript, focused on calorie counting and social fitness features.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15.1.0
+- **UI**: React 19.0.0
+- **Styling**: Tailwind CSS
+- **Forms**: React Hook Form with Zod validation
+- **Animation**: Framer Motion
+- **UI Components**: Radix UI primitives
+- **HTTP Client**: Axios
+- **Charts**: Recharts
+
+## 📁 Project Structure
+
+```
+.
+├── src/
+│   ├── app/           # Next.js app router pages
+│   ├── components/    # React components
+│   ├── contexts/      # React context providers
+│   ├── hooks/         # Custom React hooks
+│   ├── lib/           # Utility functions
+│   └── types/         # TypeScript types
+├── public/            # Static assets
+├── middleware.ts      # Next.js middleware
+├── next.config.ts     # Next.js configuration
+└── tailwind.config.ts # Tailwind CSS configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Install dependencies:
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Set up environment variables:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
 
-## Learn More
+3. Run development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Available Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔧 Core Features
 
-## Deploy on Vercel
+### UI Components
+The application includes:
+- Responsive layout with Tailwind CSS
+- Form components with React Hook Form
+- Progress indicators using Radix UI
+- Animated transitions with Framer Motion
+- Data visualization with Recharts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Data Management
+The app handles data through:
+- Form validation using Zod
+- API integration with Axios
+- Cookie management with js-cookie
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Styling
+
+The styling system uses:
+- Tailwind CSS for utility classes
+- `class-variance-authority` for component variants
+- `tailwind-merge` for class merging
+- `tailwindcss-animate` for animations
+
+Here's an example component with styling:
+```tsx
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+
+export function MyComponent({ className }: { className?: string }) {
+  return (
+    <Button 
+      className={cn("bg-primary hover:bg-primary/90", className)}
+    >
+      Click Me
+    </Button>
+  )
+}
+```
+
+## 🔒 Type Safety
+
+The project implements TypeScript for type safety. Here are example types from `src/types/`:
+
+```typescript
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  calorieGoal: number;
+}
+
+interface FoodEntry {
+  id: string;
+  userId: string;
+  calories: number;
+  timestamp: Date;
+}
+```
+
+## 📱 Responsive Design
+
+The app follows these breakpoints:
+```css
+sm: '640px'   /* Mobile */
+md: '768px'   /* Tablet */
+lg: '1024px'  /* Desktop */
+xl: '1280px'  /* Large Desktop */
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📮 Support
+
+For support, email [huzaifa.coder785@gmail.com](mailto:huzaifa.coder785@gmail.com)
+
+## 🔗 Links
+
+- [Backend Repository](https://github.com/Huzaifa785/calmate-backend)
+- [Live Demo](https://calmate.vercel.app)

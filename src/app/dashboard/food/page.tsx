@@ -158,7 +158,7 @@ export default function FoodLoggingPage() {
               <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-200">
                 <div className="flex flex-col md:flex-row">
                   <div className="md:w-1/3 relative h-48 md:h-auto">
-                    <Image
+                    <img
                       src={log.image_url}
                       alt={log.food_name}
                       className="w-full h-full object-cover"

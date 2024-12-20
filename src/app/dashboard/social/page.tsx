@@ -121,7 +121,7 @@ function SocialFeed() {
               <div className="md:w-1/3 mb-4 md:mb-0">
                 <div className="bg-gray-100 h-48 rounded-lg">
                   {item.image_url && (
-                    <Image 
+                    <img 
                       src={item.image_url} 
                       alt={item.food_name}
                       className="w-full h-full object-cover rounded-lg"

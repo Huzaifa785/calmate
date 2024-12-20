@@ -1,4 +1,3 @@
-// src/app/dashboard/page.tsx
 'use client';
 
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -11,13 +10,13 @@ import { RecentActivity } from '@/components/dashboard/recent-activity';
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const { 
-    calorieStatus, 
-    recentLogs, 
+  const {
+    calorieStatus,
+    recentLogs,
     weeklyData,
     leaderboard,
-    loading, 
-    error 
+    loading,
+    error,
   } = useDashboard();
 
   if (loading) {
@@ -38,8 +37,12 @@ export default function DashboardPage() {
 
   const weeklyChartData = Object.entries(weeklyData).map(([day, calories]) => ({
     day,
-    calories
+    calories,
   }));
+
+  const caloriePercentage = calorieStatus && calorieStatus.goal > 0
+  ? Math.min(Math.round((calorieStatus.consumed / calorieStatus.goal) * 100), 100)
+  : 0;
 
   return (
     <div className="space-y-8 p-8 max-w-7xl mx-auto">
@@ -50,7 +53,7 @@ export default function DashboardPage() {
             Welcome back, {user?.full_name || 'Builder'}! 💪🏼
           </h1>
           <p className="text-gray-600 mb-6">
-            {calorieStatus?.consumed 
+            {calorieStatus?.consumed
               ? `You've consumed ${calorieStatus.consumed} out of ${calorieStatus.goal} calories today.`
               : 'Start tracking your calories for today!'}
           </p>
@@ -59,12 +62,15 @@ export default function DashboardPage() {
               <div className="relative h-6 bg-gradient-to-r from-green-100 to-green-50 rounded-full">
                 <div
                   className="absolute inset-y-0 left-0 bg-gradient-to-r from-green-500 to-green-400 rounded-full transition-all duration-500"
-                  style={{ 
-                    width: `${Math.min((calorieStatus.consumed / calorieStatus.goal) * 100, 100)}%` 
+                  style={{
+                    width: `${Math.min(
+                      (calorieStatus.consumed / calorieStatus.goal) * 100,
+                      100
+                    )}%`,
                   }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center text-sm font-medium">
-                  {Math.round((calorieStatus.consumed / calorieStatus.goal) * 100)}% of daily goal
+                  {caloriePercentage}% of daily goal
                 </div>
               </div>
             </div>
@@ -85,7 +91,7 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">{calorieStatus?.goal || 0}</div>
-            <p className="text-sm text-gray-500">calories target</p>
+            <p className="text-sm text-gray-500">calories target (set in settings)</p>
           </CardContent>
         </Card>
 
@@ -128,34 +134,47 @@ export default function DashboardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={weeklyChartData}>
-                <defs>
-                  <linearGradient id="colorCalories" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#22c55e" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Tooltip />
-                <Line 
-                  type="monotone" 
-                  dataKey="calories" 
-                  stroke="#22c55e" 
-                  strokeWidth={2}
-                  dot={{ fill: '#22c55e', strokeWidth: 2 }}
-                  fill="url(#colorCalories)"
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            {weeklyChartData.length === 0 ? (
+              <div className="flex items-center justify-center h-full text-gray-500">
+                No data to display
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={weeklyChartData}>
+                  <defs>
+                    <linearGradient id="colorCalories" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#22c55e" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="day" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="calories"
+                    stroke="#22c55e"
+                    strokeWidth={2}
+                    dot={{ fill: '#22c55e', strokeWidth: 2 }}
+                    fill="url(#colorCalories)"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
           </CardContent>
         </Card>
 
         <Leaderboard data={leaderboard} />
       </div>
 
-      <RecentActivity logs={recentLogs.slice(0, 5)} />
+      {/* Recent Activity Section */}
+      <div>
+        {recentLogs.length === 0 ? (
+          <div className="p-4 text-gray-500">No recent activity</div>
+        ) : (
+          <RecentActivity logs={recentLogs.slice(0, 5)} />
+        )}
+      </div>
     </div>
   );
 }

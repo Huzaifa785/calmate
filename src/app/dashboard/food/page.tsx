@@ -8,17 +8,18 @@ import { Card } from "@/components/ui/card";
 import { Camera, CameraIcon, Loader2, ClipboardList } from "lucide-react";
 import { useFoodLogs } from "@/hooks/use-food-logs";
 import { motion, AnimatePresence } from "framer-motion";
+import { useDashboard } from "@/hooks/use-dashboard";
 
 // Analyzing Animation Component
 function AnalyzingAnimation() {
   return (
-    <motion.div 
+    <motion.div
       className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <motion.div 
+      <motion.div
         className="bg-white rounded-2xl p-8 flex flex-col items-center max-w-sm w-full mx-4"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -43,12 +44,15 @@ export default function FoodLoggingPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const { logs, loading, error, addLog } = useFoodLogs();
+  const { calorieStatus } = useDashboard();
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -74,7 +78,9 @@ export default function FoodLoggingPage() {
       {/* Header Section */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Food Log</h1>
-        <p className="text-gray-500">Track your meals and monitor your nutrition</p>
+        <p className="text-gray-500">
+          Track your meals and monitor your nutrition
+        </p>
       </div>
 
       {/* Upload Section */}
@@ -85,34 +91,41 @@ export default function FoodLoggingPage() {
           </div>
           <h2 className="text-xl font-semibold mb-2">Log Your Meal</h2>
           <p className="text-gray-500 mb-6 max-w-md">
-            Take a photo of your food and our AI will analyze its nutritional content
+            Take a photo of your food and our AI will analyze its nutritional
+            content
           </p>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleFileUpload}
-            className="hidden"
-            disabled={isUploading}
-          />
-          <Button
-            size="lg"
-            onClick={handleButtonClick}
-            disabled={isUploading}
-            className="relative overflow-hidden group"
-          >
-            {isUploading ? (
-              <div className="flex items-center space-x-2">
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Analyzing...</span>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Camera className="w-4 h-4" />
-                <span>Take Photo</span>
-              </div>
-            )}
-          </Button>
+          {calorieStatus && calorieStatus.goal > 0 ? (
+            <>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileUpload}
+                className="hidden"
+                disabled={isUploading}
+              />
+              <Button
+                size="lg"
+                onClick={handleButtonClick}
+                disabled={isUploading}
+                className="relative overflow-hidden group"
+              >
+                {isUploading ? (
+                  <div className="flex items-center space-x-2">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Analyzing...</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-2">
+                    <Camera className="w-4 h-4" />
+                    <span>Take Photo</span>
+                  </div>
+                )}
+              </Button>
+            </>
+          ) : (
+            "Note: Set Calorie Goal in Settings."
+          )}
         </div>
       </Card>
 
@@ -181,7 +194,9 @@ export default function FoodLoggingPage() {
                         <p className="text-2xl font-bold text-primary">
                           {log.calories} cal
                         </p>
-                        <p className="text-sm text-gray-500">{log.portion_size}g</p>
+                        <p className="text-sm text-gray-500">
+                          {log.portion_size}g
+                        </p>
                       </div>
                     </div>
 
@@ -214,9 +229,7 @@ export default function FoodLoggingPage() {
       )}
 
       {/* Analyzing Animation Overlay */}
-      <AnimatePresence>
-        {isUploading && <AnalyzingAnimation />}
-      </AnimatePresence>
+      <AnimatePresence>{isUploading && <AnalyzingAnimation />}</AnimatePresence>
     </div>
   );
 }

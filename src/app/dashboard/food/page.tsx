@@ -8,7 +8,6 @@ import { Card } from "@/components/ui/card";
 import { Camera, CameraIcon, Loader2, ClipboardList } from "lucide-react";
 import { useFoodLogs } from "@/hooks/use-food-logs";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 // Analyzing Animation Component
 function AnalyzingAnimation() {

@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Users, UserPlus, Heart, Utensils, Check, Clock } from 'lucide-react';
 import { ApiService } from '@/lib/api';
-import Image from 'next/image';
 import { FriendRequest } from '@/types/api';
 
 // Types

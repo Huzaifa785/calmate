@@ -147,4 +147,4 @@ For support, email [huzaifa.coder785@gmail.com](mailto:huzaifa.coder785@gmail.co
 
 ## Credits
 
-- [claude.ai 🔥](https://claude.ai/): Used for brainstorming, designing UI and follwing best practices.
+- [claude.ai 🔥](https://claude.ai/): Used for brainstorming, designing UI and following best practices.

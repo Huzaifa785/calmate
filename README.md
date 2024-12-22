@@ -143,4 +143,8 @@ For support, email [huzaifa.coder785@gmail.com](mailto:huzaifa.coder785@gmail.co
 ## 🔗 Links
 
 - [Backend Repository](https://github.com/Huzaifa785/calmate-backend)
-- [Live Demo](https://calmate.vercel.app)
+- [Live Demo](https://calmate-app.vercel.app)
+
+## Credits
+
+- [claude.ai 🔥](https://claude.ai/): Used for brainstorming, designing UI and following best practices.
